@@ -8,15 +8,15 @@ namespace ValaGL.Core {
      * The underlying OpenGL buffer is destroyed when this object is finally unreferenced.
      */
     public class IBO : Object {
-        private GLuint id;
+        private uint id;
         
         /**
          * Creates an index buffer object.
          * 
          * @param data Array to bind to the OpenGL buffer
          */
-        public IBO(GLushort[] data) throws CoreError {
-            GLuint id_array[1];
+        public IBO(ushort[] data) throws CoreError {
+            uint id_array[1];
             glGenBuffers(1, id_array);
             id = id_array[0];
             
@@ -37,7 +37,7 @@ namespace ValaGL.Core {
         
         ~IBO() {
             if (id != 0) {
-                GLuint[] id_array = { id };
+                uint[] id_array = { id };
                 glDeleteBuffers(1, id_array);
             }
         }

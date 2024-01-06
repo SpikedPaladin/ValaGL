@@ -15,8 +15,8 @@ namespace ValaGL.Core {
          * @param deg Angle in radians
          * @return Angle in degrees
          */
-        public static GLfloat deg_to_rad(GLfloat deg) {
-            return (GLfloat) (deg * Math.PI / 180f);
+        public static float deg_to_rad(float deg) {
+            return (float) (deg * Math.PI / 180f);
         }
         
         /**
@@ -25,8 +25,8 @@ namespace ValaGL.Core {
          * @param rad Angle in degrees
          * @return Angle in radians
          */
-        public static GLfloat rad_to_deg(GLfloat rad) {
-            return (GLfloat) (rad / Math.PI * 180f);
+        public static float rad_to_deg(float rad) {
+            return (float) (rad / Math.PI * 180f);
         }
         
         /**
@@ -84,11 +84,11 @@ namespace ValaGL.Core {
          * @param angle_deg The rotation angle in degrees
          * @param axis The rotation axis
          */
-        public static void rotate(ref Mat4 matrix, GLfloat angle_deg, ref Vec3 axis) {
+        public static void rotate(ref Mat4 matrix, float angle_deg, ref Vec3 axis) {
             Vec3 axis_normalized = axis;
             axis_normalized.normalize();
             
-            GLfloat angle_rad = deg_to_rad(angle_deg);
+            float angle_rad = deg_to_rad(angle_deg);
             
             // M = uuT + (cos a) (1 - uuT) + (sin a) S
             Mat3 tmp1 = Mat3.from_vec_mul(ref axis_normalized, ref axis_normalized);

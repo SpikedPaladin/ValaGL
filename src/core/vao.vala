@@ -8,13 +8,13 @@ namespace ValaGL.Core {
      * The underlying OpenGL vertex array is destroyed when this object is finally unreferenced.
      */
     public class VAO : Object {
-        private GLuint id;
+        private uint id;
         
         /**
          * Creates a vertex array object.
          */
         public VAO() throws CoreError {
-            GLuint id_array[1];
+            uint id_array[1];
             glGenVertexArrays(1, id_array);
             id = id_array[0];
             
@@ -26,7 +26,7 @@ namespace ValaGL.Core {
         /**
          * Registers a VBO binding to the given shader attribute in this VAO.
          */
-        public void register_vbo(VBO vbo, GLint attribute, GLsizei stride) {
+        public void register_vbo(VBO vbo, int attribute, int stride) {
             make_current();
             vbo.make_current();
             glVertexAttribPointer(attribute, stride, GL_FLOAT, (GLboolean) GL_FALSE, 0, null);
@@ -41,7 +41,7 @@ namespace ValaGL.Core {
         
         ~VAO() {
             if (id != 0) {
-                GLuint[] id_array = { id };
+                uint[] id_array = { id };
                 glDeleteVertexArrays(1, id_array);
             }
         }

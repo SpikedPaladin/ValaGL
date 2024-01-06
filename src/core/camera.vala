@@ -63,7 +63,7 @@ namespace ValaGL.Core {
          * @param uniform_id The shader uniform variable to bind to
          * @param model_matrix The model matrix
          */
-        public void apply(GLint uniform_id, ref Mat4 model_matrix) {
+        public void apply(int uniform_id, ref Mat4 model_matrix) {
             total_matrix = result_matrix;
             total_matrix.mul_mat(ref model_matrix);
             glUniformMatrix4fv(uniform_id, 1, (GLboolean) GL_FALSE, total_matrix.data);
@@ -83,11 +83,11 @@ namespace ValaGL.Core {
          * @param far The coordinate of the far vertical clipping plane. Must be positive.
          */
         public void set_frustum_projection(
-            GLfloat left,
-            GLfloat right,
-            GLfloat bottom,
-            GLfloat top,
-            GLfloat near, GLfloat far
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float near, float far
         ) {
             projection_matrix = Mat4.from_data(
                 2f * near / (right - left), 0, (right + left) / (right - left), 0,
@@ -111,7 +111,7 @@ namespace ValaGL.Core {
          * @param near The coordinate of the near vertical clipping plane. Must be positive.
          * @param far The coordinate of the far vertical clipping plane. Must be positive.
          */
-        public void set_perspective_projection(GLfloat fovy_deg, GLfloat aspect, GLfloat near, GLfloat far) {
+        public void set_perspective_projection(float fovy_deg, float aspect, float near, float far) {
             var f = 1 / Math.tanf(GeometryUtil.deg_to_rad(fovy_deg / 2));
             
             projection_matrix = Mat4.from_data(
@@ -138,11 +138,11 @@ namespace ValaGL.Core {
          * @param far The coordinate of the far vertical clipping plane.
          */
         public void set_ortho_projection(
-            GLfloat left,
-            GLfloat right,
-            GLfloat bottom,
-            GLfloat top,
-            GLfloat near, GLfloat far
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float near, float far
         ) {
             projection_matrix = Mat4.from_data(
                 2f / (right - left), 0, 0, (right + left) / (right - left),

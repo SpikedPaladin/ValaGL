@@ -8,15 +8,15 @@ namespace ValaGL.Core {
      * The underlying OpenGL buffer is destroyed when this object is finally unreferenced.
      */
     public class VBO : Object {
-        private GLuint id;
+        private uint id;
         
         /**
          * Creates a vertex buffer object.
          * 
          * @param data Array to bind to the OpenGL buffer
          */
-        public VBO(GLfloat[] data) throws CoreError {
-            GLuint id_array[1];
+        public VBO(float[] data) throws CoreError {
+            uint id_array[1];
             glGenBuffers(1, id_array);
             id = id_array[0];
             
@@ -45,14 +45,14 @@ namespace ValaGL.Core {
          * @param attribute The index of the generic vertex attribute to be modified.
          * @param stride The byte offset between consecutive generic vertex attributes.
          */
-        public void apply_as_vertex_array(GLint attribute, GLsizei stride) {
+        public void apply_as_vertex_array(int attribute, int stride) {
             make_current();
             glVertexAttribPointer(attribute, stride, GL_FLOAT, (GLboolean) GL_FALSE, 0, null);
         }
         
         ~VBO() {
             if (id != 0) {
-                GLuint[] id_array = { id };
+                uint[] id_array = { id };
                 glDeleteBuffers(1, id_array);
             }
         }

@@ -3,7 +3,7 @@ using ValaGL.Core;
 
 namespace ValaGL {
     
-    private const GLfloat[] cube_vertices = {
+    private const float[] cube_vertices = {
         // front
         -1, -1,  1,
         1, -1,  1,
@@ -16,7 +16,7 @@ namespace ValaGL {
         -1,  1, -1,
     };
     
-    private const GLfloat[] cube_colors = {
+    private const float[] cube_colors = {
         // front colors
         1, 0, 0,
         0, 1, 0,
@@ -29,7 +29,7 @@ namespace ValaGL {
         1, 1, 1,
     };
     
-    private const GLushort cube_elements[] = {
+    private const ushort cube_elements[] = {
         // front
         0, 1, 2,
         2, 3, 0,
@@ -66,9 +66,9 @@ namespace ValaGL {
         private Camera camera;
         private Mat4 model_matrix;
         
-        private GLint unif_transform;
-        private GLint attr_coord3d;
-        private GLint attr_v_color;
+        private int unif_transform;
+        private int attr_coord3d;
+        private int attr_v_color;
         public ArcballCamera arc_camera = new ArcballCamera();
         
         public Vec3 eye;
@@ -146,10 +146,10 @@ namespace ValaGL {
          * @param width The new window width
          * @param height The new window height
          */
-        public void resize_gl(uint width, uint height) {
-            glViewport(0, 0, (GLsizei) width, (GLsizei) height);
+        public void resize_gl(int width, int height) {
+            glViewport(0, 0, width, height);
             //camera.set_ortho_projection(0, width, 0, height, -1, 1);
-            camera.set_perspective_projection(70, (GLfloat) width / (GLfloat) height, 0.01f, 100f);
+            camera.set_perspective_projection(70, (float) width / (float) height, 0.01f, 100f);
         }
         
         /**

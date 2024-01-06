@@ -6,7 +6,7 @@ namespace ValaGL.Core {
      * A 3-component vector.
      */
     public struct Vec3 {
-        public GLfloat data[3];
+        public float data[3];
         
         /**
          * Creates a new vector, zero initialized.
@@ -16,7 +16,7 @@ namespace ValaGL.Core {
         /**
          * Creates a vector whose contents are the copy of the given data.
          */
-        public Vec3.from_data(GLfloat x, GLfloat y, GLfloat z) {
+        public Vec3.from_data(float x, float y, float z) {
             data[0] = x;
             data[1] = y;
             data[2] = z;
@@ -25,7 +25,7 @@ namespace ValaGL.Core {
         /**
          * Creates a vector whose contents are the copy of the given array.
          */
-        public Vec3.from_array([CCode (array_length = false)] GLfloat[] data) {
+        public Vec3.from_array([CCode (array_length = false)] float[] data) {
             this.data[0] = data[0];
             this.data[1] = data[1];
             this.data[2] = data[2];
@@ -70,7 +70,7 @@ namespace ValaGL.Core {
         /**
          * Computes the dot product of this vector and the other vector.
          */
-        public GLfloat dot_product(ref Vec3 other) {
+        public float dot_product(ref Vec3 other) {
             return data[0] * other.data[0] + data[1] * other.data[1] + data[2] * other.data[2];
         }
         
@@ -88,7 +88,7 @@ namespace ValaGL.Core {
         /**
          * Multiplies the vector by the given scalar.
          */
-        public void mul(GLfloat factor) {
+        public void mul(float factor) {
             data[0] *= factor;
             data[1] *= factor;
             data[2] *= factor;
@@ -97,7 +97,7 @@ namespace ValaGL.Core {
         /**
          * Divides the vector by the given scalar.
          */
-        public void div(GLfloat factor) {
+        public void div(float factor) {
             data[0] /= factor;
             data[1] /= factor;
             data[2] /= factor;
@@ -106,7 +106,7 @@ namespace ValaGL.Core {
         /**
          * Computes the norm of this vector.
          */
-        public GLfloat norm() {
+        public float norm() {
             return Math.sqrtf(dot_product(ref this));
         }
         
@@ -121,7 +121,7 @@ namespace ValaGL.Core {
         /**
          * Convenience accessor for data[0].
          */
-        public GLfloat x {
+        public float x {
             get { return data[0]; }
             set { data[0] = value; }
         }
@@ -129,7 +129,7 @@ namespace ValaGL.Core {
         /**
          * Convenience accessor for data[1].
          */
-        public GLfloat y {
+        public float y {
             get { return data[1]; }
             set { data[1] = value; }
         }
@@ -137,7 +137,7 @@ namespace ValaGL.Core {
         /**
          * Convenience accessor for data[2].
          */
-        public GLfloat z {
+        public float z {
             get { return data[2]; }
             set { data[2] = value; }
         }
@@ -147,7 +147,7 @@ namespace ValaGL.Core {
      * A 4-component vector.
      */
     public struct Vec4 {
-        public GLfloat data[4];
+        public float data[4];
         
         /**
          * Creates a new vector, zero initialized.
@@ -157,7 +157,7 @@ namespace ValaGL.Core {
         /**
          * Creates a vector whose contents are the copy of the given data.
          */
-        public Vec4.from_data(GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+        public Vec4.from_data(float x, float y, float z, float w) {
             data[0] = x;
             data[1] = y;
             data[2] = z;
@@ -167,7 +167,7 @@ namespace ValaGL.Core {
         /**
          * Creates a vector whose contents are the copy of the given array.
          */
-        public Vec4.from_array([CCode (array_length = false)] GLfloat[] data) {
+        public Vec4.from_array([CCode (array_length = false)] float[] data) {
             this.data[0] = data[0];
             this.data[1] = data[1];
             this.data[2] = data[2];
@@ -177,7 +177,7 @@ namespace ValaGL.Core {
         /**
          * Expands a 3x3 vector plus scalar into a 4x4 vector.
          */
-        public Vec4.expand(ref Vec3 vec3, GLfloat w) {
+        public Vec4.expand(ref Vec3 vec3, float w) {
             this.data[0] = vec3.data[0];
             this.data[1] = vec3.data[1];
             this.data[2] = vec3.data[2];
@@ -227,7 +227,7 @@ namespace ValaGL.Core {
         /**
          * Computes the dot product of this vector and the other vector.
          */
-        public GLfloat dot_product(ref Vec4 other) {
+        public float dot_product(ref Vec4 other) {
             return data[0] * other.data[0] + data[1] * other.data[1]
                  + data[2] * other.data[2] + data[3] * other.data[3];
         }
@@ -235,7 +235,7 @@ namespace ValaGL.Core {
         /**
          * Multiplies the vector by the given scalar.
          */
-        public void mul(GLfloat factor) {
+        public void mul(float factor) {
             data[0] *= factor;
             data[1] *= factor;
             data[2] *= factor;
@@ -245,7 +245,7 @@ namespace ValaGL.Core {
         /**
          * Divides the vector by the given scalar.
          */
-        public void div(GLfloat factor) {
+        public void div(float factor) {
             data[0] /= factor;
             data[1] /= factor;
             data[2] /= factor;
@@ -255,7 +255,7 @@ namespace ValaGL.Core {
         /**
          * Computes the norm of this vector.
          */
-        public GLfloat norm() {
+        public float norm() {
             return Math.sqrtf(dot_product(ref this));
         }
         
@@ -270,28 +270,28 @@ namespace ValaGL.Core {
         /**
          * Convenience accessor for data[0].
          */
-        public GLfloat x {
+        public float x {
             get { return data[0]; }
         }
         
         /**
          * Convenience accessor for data[1].
          */
-        public GLfloat y {
+        public float y {
             get { return data[1]; }
         }
         
         /**
          * Convenience accessor for data[2].
          */
-        public GLfloat z {
+        public float z {
             get { return data[2]; }
         }
         
         /**
          * Convenience accessor for data[3].
          */
-        public GLfloat w {
+        public float w {
             get { return data[3]; }
         }
     }
@@ -313,9 +313,9 @@ namespace ValaGL.Core {
          * the internal storage format (row-first-index).
          */
         public Mat3.from_data(
-            GLfloat a11, GLfloat a12, GLfloat a13,
-            GLfloat a21, GLfloat a22, GLfloat a23,
-            GLfloat a31, GLfloat a32, GLfloat a33
+            float a11, float a12, float a13,
+            float a21, float a22, float a23,
+            float a31, float a32, float a33
         ) {
             data[0] = a11;
             data[1] = a21;
@@ -350,7 +350,7 @@ namespace ValaGL.Core {
         /**
          * Creates a matrix whose contents are the copy of the given array, assumed to have at least 9 elements.
          */
-        public Mat3.from_array([CCode (array_length = false)] GLfloat[] data) {
+        public Mat3.from_array([CCode (array_length = false)] float[] data) {
             this.data = data;
         }
         
@@ -382,7 +382,7 @@ namespace ValaGL.Core {
         /**
          * Multiplies the matrix by the given scalar, component-wise.
          */
-        public void mul(GLfloat factor) {
+        public void mul(float factor) {
             for (int i = 0; i < 9; i++)
                 data[i] *= factor;
         }
@@ -390,7 +390,7 @@ namespace ValaGL.Core {
         /**
          * Divides the matrix by the given scalar, component-wise.
          */
-        public void div(GLfloat factor) {
+        public void div(float factor) {
             for (int i = 0; i < 9; i++)
                 data[i] /= factor;
         }
@@ -444,7 +444,7 @@ namespace ValaGL.Core {
         /**
          * Computes the determinant of this matrix.
          */
-        public GLfloat det() {
+        public float det() {
             return det_helper3(data[0:3], data[3:6], data[6:9]);
         }
         
@@ -456,7 +456,7 @@ namespace ValaGL.Core {
          *         otherwise the return value is undefined.
          */
         public Mat3 inverted(out bool success) {
-            GLfloat det = det();
+            float det = det();
             
             if (Math.fabsf(det) < 0.00001f) {
                 success = false;
@@ -465,7 +465,7 @@ namespace ValaGL.Core {
             
             success = true;
             
-            GLfloat inv_det = 1.0f / det;
+            float inv_det = 1.0f / det;
             Mat3 res = Mat3();
             
             for (int i = 0; i < 3; i++) {
@@ -501,10 +501,10 @@ namespace ValaGL.Core {
          * the internal storage format (row-first-index).
          */
         public Mat4.from_data(
-            GLfloat a11, GLfloat a12, GLfloat a13, GLfloat a14,
-            GLfloat a21, GLfloat a22, GLfloat a23, GLfloat a24,
-            GLfloat a31, GLfloat a32, GLfloat a33, GLfloat a34,
-            GLfloat a41, GLfloat a42, GLfloat a43, GLfloat a44
+            float a11, float a12, float a13, float a14,
+            float a21, float a22, float a23, float a24,
+            float a31, float a32, float a33, float a34,
+            float a41, float a42, float a43, float a44
         ) {
             data[0]  = a11;
             data[1]  = a21;
@@ -555,7 +555,7 @@ namespace ValaGL.Core {
         /**
          * Creates a matrix whose contents are the copy of the given array, assumed to have at least 16 elements.
          */
-        public Mat4.from_array([CCode (array_length = false)] GLfloat[] data) {
+        public Mat4.from_array([CCode (array_length = false)] float[] data) {
             this.data = data;
         }
         
@@ -611,7 +611,7 @@ namespace ValaGL.Core {
         /**
          * Multiplies the matrix by the given scalar, component-wise.
          */
-        public void mul(GLfloat factor) {
+        public void mul(float factor) {
             for (int i = 0; i < 16; i++)
                 data[i] *= factor;
         }
@@ -619,7 +619,7 @@ namespace ValaGL.Core {
         /**
          * Divides the matrix by the given scalar, component-wise.
          */
-        public void div(GLfloat factor) {
+        public void div(float factor) {
             for (int i = 0; i < 16; i++)
                 data[i] /= factor;
         }
@@ -673,7 +673,7 @@ namespace ValaGL.Core {
         /**
          * Computes the determinant of this matrix.
          */
-        public GLfloat det() {
+        public float det() {
             return data[0]  * det_helper3(data[4:8], data[9:12], data[13:16])
                  - data[4]  * det_helper3(data[1:4], data[9:12], data[13:16])
                  + data[8]  * det_helper3(data[1:4], data[4:8],  data[13:16])
@@ -688,7 +688,7 @@ namespace ValaGL.Core {
          *         otherwise the return value is undefined.
          */
         public Mat4 inverted(out bool success) {
-            GLfloat det = det();
+            float det = det();
             
             if (Math.fabsf(det) < 0.00001f) {
                 success = false;
@@ -697,7 +697,7 @@ namespace ValaGL.Core {
             
             success = true;
             
-            GLfloat inv_det = 1.0f / det;
+            float inv_det = 1.0f / det;
             Mat3 transposed_submatrix = Mat3();
             Mat4 res = Mat4();
             
@@ -725,10 +725,10 @@ namespace ValaGL.Core {
         }
     }
 
-    private static GLfloat det_helper3(
-        [CCode (array_length = false)] GLfloat[] col1,
-        [CCode (array_length = false)] GLfloat[] col2,
-        [CCode (array_length = false)] GLfloat[] col3
+    private static float det_helper3(
+        [CCode (array_length = false)] float[] col1,
+        [CCode (array_length = false)] float[] col2,
+        [CCode (array_length = false)] float[] col3
     ) {
         return col1[0] * (col2[1] * col3[2] - col2[2] * col3[1])
              + col2[0] * (col3[1] * col1[2] - col3[2] * col1[1])
