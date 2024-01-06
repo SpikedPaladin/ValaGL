@@ -6,7 +6,25 @@ namespace ValaGL {
         [GtkChild]
         public unowned Gtk.GLArea area;
         [GtkChild]
-        public unowned Gtk.Switch autorender;
+        public unowned Adw.SwitchRow autorender;
+        [GtkChild]
+        private unowned Adw.SpinRow eye_x;
+        [GtkChild]
+        private unowned Adw.SpinRow eye_y;
+        [GtkChild]
+        private unowned Adw.SpinRow eye_z;
+        [GtkChild]
+        private unowned Adw.SpinRow center_x;
+        [GtkChild]
+        private unowned Adw.SpinRow center_y;
+        [GtkChild]
+        private unowned Adw.SpinRow center_z;
+        [GtkChild]
+        private unowned Adw.SpinRow up_x;
+        [GtkChild]
+        private unowned Adw.SpinRow up_y;
+        [GtkChild]
+        private unowned Adw.SpinRow up_z;
         
         private Canvas canvas;
         private bool rotating;
@@ -14,12 +32,29 @@ namespace ValaGL {
         public MainWindow(Gtk.Application app) {
             Object(application: app);
             
+            eye_x.notify["value"].connect(() => update_eye());
+            eye_y.notify["value"].connect(() => update_eye());
+            eye_z.notify["value"].connect(() => update_eye());
+            center_x.notify["value"].connect(() => update_eye());
+            center_y.notify["value"].connect(() => update_eye());
+            center_z.notify["value"].connect(() => update_eye());
+            up_x.notify["value"].connect(() => update_eye());
+            up_y.notify["value"].connect(() => update_eye());
+            up_z.notify["value"].connect(() => update_eye());
+            
             area.add_tick_callback(() => {
                 if (autorender.active)
                     area.queue_render();
                 
                 return true;
             });
+        }
+        
+        private void update_eye() {
+            canvas.eye = Core.Vec3.from_data((float) eye_x.value, (float) eye_y.value, (float) eye_z.value);
+            canvas.center = Core.Vec3.from_data((float) center_x.value, (float) center_y.value, (float) center_z.value);
+            canvas.up = Core.Vec3.from_data((float) up_x.value, (float) up_y.value, (float) up_z.value);
+            canvas.update_camera();
         }
         
         [GtkCallback]

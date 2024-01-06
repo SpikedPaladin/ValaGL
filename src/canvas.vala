@@ -71,6 +71,10 @@ namespace ValaGL {
         private GLint attr_v_color;
         public ArcballCamera arc_camera = new ArcballCamera();
         
+        public Vec3 eye;
+        public Vec3 center;
+        public Vec3 up;
+        
         /**
          * Instantiates a new canvas object.
          * 
@@ -84,7 +88,7 @@ namespace ValaGL {
             glDebugMessageCallback(on_gl_error);
             
             // GL initialization comes here
-            glClearColor(71.0f/255, 95.0f/255, 121.0f/255, 1);
+            glClearColor(71.0f / 255, 95.0f / 255, 121.0f / 255, 1);
             glEnable(GL_MULTISAMPLE);
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_BLEND);
@@ -114,9 +118,13 @@ namespace ValaGL {
             }
             
             camera = new Camera();
-            Vec3 eye = Vec3.from_data(0, 2, 0);
-            Vec3 center = Vec3.from_data(0, 0, -2);
-            Vec3 up = Vec3.from_data(0, 1, 0);
+            eye = Vec3.from_data(0, 0, 0);
+            center = Vec3.from_data(0, 0, -2);
+            up = Vec3.from_data(0, 1, 0);
+            update_camera();
+        }
+        
+        public void update_camera() {
             camera.look_at(ref eye, ref center, ref up);
         }
         
@@ -209,7 +217,7 @@ namespace ValaGL {
             current_quaternion.axis = get_unit_vector(current_quaternion.axis);
             
             cos_value = dot_product(); //q0 is cosine of the angle here.
-            if(cos_value > 1) cos_value = 1; // when dot product gives '1' as result, it doesn't equal to 1 actually. It equals to just like 1.00000000001 . 
+            if (cos_value > 1) cos_value = 1; // when dot product gives '1' as result, it doesn't equal to 1 actually. It equals to just like 1.00000000001 . 
             theta = (float) (Math.acos(cos_value) * 180 / 3.1416); //theta is the angle now.
             current_quaternion.cosine = (float) Math.cos((theta / 2) * 3.1416 / 180); //currentQuaternion.cosine is cos of half the angle now.
 

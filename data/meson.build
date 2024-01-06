@@ -1,11 +1,11 @@
-gnome = import('gnome')
-
-blueprints = custom_target ('blueprints',
-  input: files (
-    'ui/window.blp',
-  ),
-  output: '.',
-  command: [ find_program ('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@' ],
+blueprints = custom_target(
+    'blueprints',
+    
+    input: files(
+        'ui/window.blp',
+    ),
+    output: '.',
+    command: [ find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@' ],
 )
 
 # Include shaders in executable

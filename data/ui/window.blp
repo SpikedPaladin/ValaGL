@@ -6,7 +6,7 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
     default-width: 900;
     default-height: 800;
     
-    Gtk.Box {
+    Box {
         orientation: vertical;
         
         Adw.HeaderBar {
@@ -18,7 +18,7 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
         }
         
         Adw.Flap flap {
-            reveal-flap: bind-property toggle_pane_button.active bidirectional;
+            reveal-flap: bind toggle_pane_button.active bidirectional;
             flap-position: end;
             
             [flap]
@@ -28,24 +28,110 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
                 margin-top: 8;
                 margin-bottom: 10;
                 width-request: 300;
+                hexpand: false;
                 spacing: 8;
                 orientation: vertical;
                 
-                Box {
-                    orientation: horizontal;
+                Adw.PreferencesGroup {
+                    title: "Render";
                     
-                    Switch autorender {
+                    Adw.SwitchRow autorender {
+                        title: "Autorender";
                         active: true;
                     }
+                }
+                
+                Adw.PreferencesGroup {
+                    title: "Camera";
                     
-                    Text {
-                        text: "Autorender";
+                    Adw.SpinRow eye_x {
+                        title: "Eye X";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow eye_y {
+                        title: "Eye Y";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow eye_z {
+                        title: "Eye Z";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                        value: 4;
+                    }
+                    Adw.SpinRow center_x {
+                        title: "Center X";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow center_y {
+                        title: "Center Y";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow center_z {
+                        title: "Center Z";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow up_x {
+                        title: "Up X";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                    }
+                    Adw.SpinRow up_y {
+                        title: "Up Y";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
+                        value: 1;
+                    }
+                    Adw.SpinRow up_z {
+                        title: "Up Z";
+                        adjustment: Adjustment {
+                            lower: -100;
+                            upper: 100;
+                            page-increment: 10;
+                            step-increment: 1;
+                        };
                     }
                 }
             }
             
             [content]
-            Gtk.GLArea area {
+            GLArea area {
                 resize => $on_resize();
                 render => $on_render();
                 realize => $on_realize();
