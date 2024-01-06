@@ -74,6 +74,7 @@ namespace ValaGL {
         public Vec3 eye;
         public Vec3 center;
         public Vec3 up;
+        public int render_mode = -1;
         
         /**
          * Instantiates a new canvas object.
@@ -118,7 +119,7 @@ namespace ValaGL {
             }
             
             camera = new Camera();
-            eye = Vec3.from_data(0, 0, 0);
+            eye = Vec3.from_data(0, 0, 1);
             center = Vec3.from_data(0, 0, -2);
             up = Vec3.from_data(0, 1, 0);
             update_camera();
@@ -147,6 +148,7 @@ namespace ValaGL {
          */
         public void resize_gl(uint width, uint height) {
             glViewport(0, 0, (GLsizei) width, (GLsizei) height);
+            //camera.set_ortho_projection(0, width, 0, height, -1, 1);
             camera.set_perspective_projection(70, (GLfloat) width / (GLfloat) height, 0.01f, 100f);
         }
         
@@ -159,6 +161,8 @@ namespace ValaGL {
          */
         public void paint_gl() {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            
+            update_render_mode();
             
             // Compute current transformation matrix for the cube
             model_matrix = Mat4.identity();
@@ -185,6 +189,29 @@ namespace ValaGL {
             glDrawElements(GL_TRIANGLES, cube_elements.length, GL_UNSIGNED_SHORT, null);
             glDisableVertexAttribArray(attr_coord3d);
             glDisableVertexAttribArray(attr_v_color);
+        }
+        
+        private void update_render_mode() {
+            switch (render_mode) {
+                case 0:
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                    glEnable(GL_DEPTH_TEST);
+                    glEnable(GL_CULL_FACE);
+                    render_mode = -1;
+                    break;
+                case 1:
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                    glDisable(GL_DEPTH_TEST);
+                    glDisable(GL_CULL_FACE);
+                    render_mode = -1;
+                    break;
+                case 2:
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+                    glDisable(GL_DEPTH_TEST);
+                    glDisable(GL_CULL_FACE);
+                    render_mode = -1;
+                    break;
+            }
         }
     }
     

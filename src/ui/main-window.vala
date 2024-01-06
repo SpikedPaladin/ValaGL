@@ -8,6 +8,8 @@ namespace ValaGL {
         [GtkChild]
         public unowned Adw.SwitchRow autorender;
         [GtkChild]
+        private unowned Adw.ComboRow render_mode;
+        [GtkChild]
         private unowned Adw.SpinRow eye_x;
         [GtkChild]
         private unowned Adw.SpinRow eye_y;
@@ -31,6 +33,8 @@ namespace ValaGL {
         
         public MainWindow(Gtk.Application app) {
             Object(application: app);
+            
+            render_mode.notify["selected"].connect(() => canvas.render_mode = (int) render_mode.selected);
             
             eye_x.notify["value"].connect(() => update_eye());
             eye_y.notify["value"].connect(() => update_eye());

@@ -39,6 +39,12 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
                         title: "Autorender";
                         active: true;
                     }
+                    Adw.ComboRow render_mode {
+                        title: "Render mode";
+                        model: StringList {
+                            strings ["Fill", "Wireframe", "Point"]
+                        };
+                    }
                 }
                 
                 Adw.PreferencesGroup {
@@ -70,7 +76,7 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
                             page-increment: 10;
                             step-increment: 1;
                         };
-                        value: 4;
+                        value: 1;
                     }
                     Adw.SpinRow center_x {
                         title: "Center X";
