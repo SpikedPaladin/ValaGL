@@ -23,6 +23,10 @@ valagl_sources = files(
     'core/matrix-math.vala',
     'core/vao.vala',
     'core/vbo.vala',
+    
+    'core/objects/cube.vala',
+    'core/objects/object-3d.vala',
+    'core/objects/sphere.vala'
 )
 
 executable(

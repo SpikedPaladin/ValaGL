@@ -10,6 +10,8 @@ namespace ValaGL {
         [GtkChild]
         private unowned Adw.ComboRow render_mode;
         [GtkChild]
+        private unowned Adw.ComboRow render_object;
+        [GtkChild]
         private unowned Adw.SpinRow eye_x;
         [GtkChild]
         private unowned Adw.SpinRow eye_y;
@@ -35,6 +37,7 @@ namespace ValaGL {
             Object(application: app);
             
             render_mode.notify["selected"].connect(() => canvas.render_mode = (int) render_mode.selected);
+            render_object.notify["selected"].connect(() => canvas.set_object(render_object.selected == 0 ? new Cube() as Object3D : new Sphere(1, 20, 20, false, 2) as Object3D));
             
             eye_x.notify["value"].connect(() => update_eye());
             eye_y.notify["value"].connect(() => update_eye());
@@ -64,8 +67,8 @@ namespace ValaGL {
         [GtkCallback]
         public void on_rotate(double x, double y) {
             if (rotating) {
-                canvas.arc_camera.current_pos.x = (float) ((x - (area.get_width() / 2) ) / (area.get_width()/2)) * 1;
-                canvas.arc_camera.current_pos.y = (float) (((area.get_height()/2) - y) / (area.get_height()/2)) * 1;
+                canvas.arc_camera.current_pos.x = (float) ((x - (area.get_width() / 2) ) / (area.get_width() / 2)) * 1;
+                canvas.arc_camera.current_pos.y = (float) (((area.get_height() / 2) - y) / (area.get_height() / 2)) * 1;
                 canvas.arc_camera.current_pos.z = canvas.arc_camera.z_axis(canvas.arc_camera.current_pos.x, canvas.arc_camera.current_pos.y);
                 canvas.arc_camera.rotation();
             }

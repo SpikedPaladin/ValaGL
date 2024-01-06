@@ -3,53 +3,6 @@ using ValaGL.Core;
 
 namespace ValaGL {
     
-    private const float[] cube_vertices = {
-        // front
-        -1, -1,  1,
-        1, -1,  1,
-        1,  1,  1,
-        -1,  1,  1,
-        // back
-        -1, -1, -1,
-        1, -1, -1,
-        1,  1, -1,
-        -1,  1, -1,
-    };
-    
-    private const float[] cube_colors = {
-        // front colors
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1,
-        1, 1, 1,
-        // back colors
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1,
-        1, 1, 1,
-    };
-    
-    private const ushort cube_elements[] = {
-        // front
-        0, 1, 2,
-        2, 3, 0,
-        // top
-        1, 5, 6,
-        6, 2, 1,
-        // back
-        7, 6, 5,
-        5, 4, 7,
-        // bottom
-        4, 0, 3,
-        3, 7, 4,
-        // left
-        4, 5, 1,
-        1, 0, 4,
-        // right
-        3, 2, 6,
-        6, 7, 3,
-    };
-    
     /**
      * The OpenGL canvas associated with the application main window.
      * 
@@ -61,7 +14,7 @@ namespace ValaGL {
         private VBO coord_vbo;
         private VBO color_vbo;
         private VAO vao;
-        private IBO element_ibo;
+        private IBO ibo;
         
         private Camera camera;
         private Mat4 model_matrix;
@@ -75,6 +28,8 @@ namespace ValaGL {
         public Vec3 center;
         public Vec3 up;
         public int render_mode = -1;
+        public Object3D object = new Cube();
+        public Object3D? new_object = null;
         
         /**
          * Instantiates a new canvas object.
@@ -107,22 +62,26 @@ namespace ValaGL {
                 
                 vao = new VAO();
                 
-                coord_vbo = new VBO(cube_vertices);
+                coord_vbo = new VBO(object.vertices);
                 vao.register_vbo(coord_vbo, attr_coord3d, 3);
                 
-                color_vbo = new VBO(cube_colors);
+                color_vbo = new VBO(object.colors);
                 vao.register_vbo(color_vbo, attr_v_color, 3);
                 
-                element_ibo = new IBO(cube_elements);
+                ibo = new IBO(object.indices);
             } catch (CoreError e) {
                 throw new AppError.INIT(e.message);
             }
             
             camera = new Camera();
-            eye = Vec3.from_data(0, 0, 1);
+            eye = Vec3.from_data(0, 0, 3);
             center = Vec3.from_data(0, 0, -2);
             up = Vec3.from_data(0, 1, 0);
             update_camera();
+        }
+        
+        public void set_object(Object3D object) {
+            new_object = object;
         }
         
         public void update_camera() {
@@ -162,13 +121,14 @@ namespace ValaGL {
         public void paint_gl() {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
+            update_object();
             update_render_mode();
             
             // Compute current transformation matrix for the cube
             model_matrix = Mat4.identity();
             
-            Vec3 translation = Vec3.from_data(0, 0, -4);
-            GeometryUtil.translate(ref model_matrix, ref translation);
+            //Vec3 translation = Vec3.from_data(0, 0, -4);
+            //GeometryUtil.translate(ref model_matrix, ref translation);
             
             GeometryUtil.rotate(ref model_matrix, arc_camera.angle, ref arc_camera.rotational_axis);
             
@@ -183,12 +143,31 @@ namespace ValaGL {
             
             // Apply buffers
             vao.make_current();
-            element_ibo.make_current();
+            ibo.make_current();
             
             // Draw the cube
-            glDrawElements(GL_TRIANGLES, cube_elements.length, GL_UNSIGNED_SHORT, null);
+            glDrawElements(GL_TRIANGLES, object.indices.length, GL_UNSIGNED_SHORT, null);
             glDisableVertexAttribArray(attr_coord3d);
             glDisableVertexAttribArray(attr_v_color);
+        }
+        
+        public void update_object() {
+            if (new_object != null) {
+                try {
+                    vao = new VAO();
+                    
+                    coord_vbo = new VBO(new_object.vertices);
+                    vao.register_vbo(coord_vbo, attr_coord3d, 3);
+                    
+                    color_vbo = new VBO(new_object.colors);
+                    vao.register_vbo(color_vbo, attr_v_color, 3);
+                    
+                    ibo = new IBO(new_object.indices);
+                    
+                    object = new_object;
+                    new_object = null;
+                } catch (Error e) {}
+            }
         }
         
         private void update_render_mode() {

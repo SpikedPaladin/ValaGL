@@ -45,6 +45,12 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
                             strings ["Fill", "Wireframe", "Point"]
                         };
                     }
+                    Adw.ComboRow render_object {
+                        title: "Object";
+                        model: StringList {
+                            strings ["Cube", "Sphere"]
+                        };
+                    }
                 }
                 
                 Adw.PreferencesGroup {
@@ -76,7 +82,7 @@ template $ValaGLMainWindow : Adw.ApplicationWindow {
                             page-increment: 10;
                             step-increment: 1;
                         };
-                        value: 1;
+                        value: 3;
                     }
                     Adw.SpinRow center_x {
                         title: "Center X";
